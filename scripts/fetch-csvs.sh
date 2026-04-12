@@ -1,22 +1,20 @@
 set -euo pipefail
-
 ZIP_URL="https://raw.githubusercontent.com/joachimvandekerckhove/cogs205b-s26/main/modules/02-version-control/files/data.zip"
 TODAY="$(date +%F)"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DATA_DIR="${REPO_ROOT}/data/${TODAY}"
 
-TMP_DIR="$(mktemp -d)"
+# create temporally directory
+TEMP_DIR="$(mktemp -d)"
 trap 'rm -rf "${TMP_DIR}"' EXIT
-
-# DOWNLOAD AND UNZIP 
-curl -L "${ZIP_URL}" -o "${TMP_DIR}/data.zip"
-unzip -q "${TMP_DIR}/data.zip" -d "${TMP_DIR}/unzipped"
+# download and unzip the data 
+curl -L "${ZIP_URL}" -o "${TEMP_DIR}/data.zip"
+unzip -q "${TEMP_DIR}/data.zip" -d "${TEMP_DIR}/unzipped"
 
 
 mkdir -p "${DATA_DIR}"
-
-# COPY ROOT CSV FILES
-find "${TMP_DIR}/unzipped" -maxdepth 1 -type f -name "*.csv" -exec cp {} "${DATA_DIR}/" \;
+# copy root csv
+find "${TEMP_DIR}/unzipped" -maxdepth 1 -type f -name "*.csv" -exec cp {} "${DATA_DIR}/" \;
 
 
 cd "${REPO_ROOT}"
