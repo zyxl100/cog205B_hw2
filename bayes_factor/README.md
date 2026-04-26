@@ -19,7 +19,8 @@ pip install scipy
 From inside the `bayes_factor/` folder:
 
 ```bash
-python -m unittest tests/test_bayes_factor.py
+python3 -m unittest -v tests/test_bayes_factor.py # for individual tests
+python -m unittest tests/test_bayes_factor.py # for all tests
 ```
 
 ## Docker
